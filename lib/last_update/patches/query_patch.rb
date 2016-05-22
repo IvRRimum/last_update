@@ -2,7 +2,7 @@ module LastUpdate
   module Patches
     module QueryPatch
       def last_update
-        return "#{last_record_in_histroy_created_on}: #{last_record_in_histroy_note}" if self.journals.any?
+        return "#{last_record_in_histroy_created_on}: #{last_record_in_histroy_note}" if self.journals.any? && self.journals.where("notes != ''").any?
 
         "No records yet."
       end
