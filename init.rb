@@ -1,14 +1,13 @@
 require 'redmine'
-require 'dispatcher'
 
-Dispatcher.to_prepare do
-  Issue.send(:include, RedmineClosedColumn::Patches::IssuePatch) unless Issue.include?(RedmineClosedColumn::Patches::IssuePatch)
-  Query.send(:include, RedmineClosedColumn::Patches::QueryPatch) unless Query.include?(RedmineClosedColumn::Patches::QueryPatch)
-end
+issue_query = (IssueQuery rescue Query)
+issue_query.add_available_column(QueryColumn.new(:last_update, :value => "null"))
 
-Redmine::Plugin.register :redmine_closed_column do
-  name 'Redmine Issue closed column'
-  author 'Tony Marschall'
-  description 'This plugin adds a first closed date, last closed date and count closes column to issue lists.'
+Issue.send(:include, LastUpdate::Patches::QueryPatch)
+
+Redmine::Plugin.register :last_update do
+  name 'Last update'
+  author 'Ivrrimum'
+  description 'Shows Time and first 1000 characters for last history entery.'
   version '0.3'
 end
