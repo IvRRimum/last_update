@@ -1,4 +1,4 @@
-= Redmine close column
+= Redmine Last update
 
 Adds column to ISSUE list view, last updated, witch shows date and first 1000 characters of last history entery, for specific issue.
 
